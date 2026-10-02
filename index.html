@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PORTFOLIO — Arjun Balaji S | Full-Stack Software Engineer</title>
+
+  <!-- Google Fonts: Syne, Space Grotesk, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#ea3829',
+              dark: '#111215',
+              bg: '#e4e5e7',
+              gray: '#8e939e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Libraries: GSAP, ScrollTrigger, Lenis, Three.js, Lucide Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-[#e4e5e7] text-[#111215] antialiased selection:bg-[#ea3829] selection:text-white overflow-x-hidden">
+
+  <!-- Top Scroll Progress Indicator Bar -->
+  <div id="scroll-progress-bar" class="fixed top-0 left-0 h-1 bg-[#ea3829] z-[9999] w-0 transition-all duration-75"></div>
+
+  <!-- Background Canvas for Subtle 3D Particles -->
+  <canvas id="webgl-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Main Grid Overlay container -->
+  <div class="fixed inset-0 pointer-events-none z-0 grid-crosshairs opacity-60"></div>
+
+  <!-- Floating Back To Top Button & Shortcut Pill -->
+  <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111215]/80 text-white border border-white/10 text-[10px] font-mono shadow-xl backdrop-blur-md">
+      <span>KEYS:</span>
+      <span class="px-1.5 py-0.5 rounded bg-white/20 text-[#ea3829] font-bold">1</span>
+      <span class="px-1.5 py-0.5 rounded bg-white/20 text-gray-300 font-bold">2</span>
+      <span class="px-1.5 py-0.5 rounded bg-white/20 text-gray-300 font-bold">3</span>
+    </div>
+    <button id="btn-back-top" class="p-3 rounded-full bg-[#ea3829] text-white shadow-xl hover:scale-110 active:scale-95 transition-all opacity-0 pointer-events-none" title="Back to top">
+      <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="fixed top-0 left-0 w-full z-50 px-8 py-6">
+    <div class="max-w-7xl mx-auto flex items-center justify-between backdrop-blur-md bg-[#e4e5e7]/80 rounded-2xl px-6 py-2.5 border border-black/5 shadow-sm">
+      
+      <!-- Top Left: Welcome Tag -->
+      <div class="flex items-center gap-4">
+        <span class="crosshair-plus -left-4 -top-1">+</span>
+        <div class="flex flex-col">
+          <span class="font-mono-tech text-xs font-bold uppercase tracking-wider text-[#111215]">ARJUN BALAJI S</span>
+          <span class="font-mono-tech text-[10px] text-gray-500 uppercase tracking-widest">FULL-STACK DEVELOPER</span>
+        </div>
+      </div>
+
+      <!-- Center Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-mono-tech uppercase font-bold tracking-widest">
+        <a href="#hero" class="hover:text-[#ea3829] transition-colors">Overview</a>
+        <a href="#portfolio-deck" class="hover:text-[#ea3829] transition-colors">3D Deck</a>
+        <a href="#skills-awards" class="hover:text-[#ea3829] transition-colors">Skills</a>
+        <a href="#projects-section" class="hover:text-[#ea3829] transition-colors">Projects</a>
+        <a href="#hackathons-section" class="hover:text-[#ea3829] transition-colors">Hackathons</a>
+        <a href="#achievements-section" class="hover:text-[#ea3829] transition-colors">Achievements</a>
+        <a href="#contact" class="hover:text-[#ea3829] transition-colors">Contact</a>
+      </nav>
+
+      <!-- Top Right: Crosshair / Compass Badge -->
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/Arjunbalaji123" target="_blank" class="p-2 rounded-full border border-black/10 hover:border-[#ea3829] text-black hover:text-[#ea3829] transition-all flex items-center gap-1.5 text-xs font-mono font-bold" title="GitHub Profile">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span class="hidden xl:inline">GITHUB</span>
+        </a>
+        <a href="https://www.linkedin.com/in/arjun-balaji-s-288b9331b/" target="_blank" class="p-2 rounded-full border border-black/10 hover:border-[#ea3829] text-black hover:text-[#ea3829] transition-all flex items-center gap-1.5 text-xs font-mono font-bold" title="LinkedIn Profile">
+          <i data-lucide="linkedin" class="w-4 h-4"></i>
+          <span class="hidden xl:inline">LINKEDIN</span>
+        </a>
+        <button id="btn-audio" class="p-2 rounded-full border border-black/10 hover:border-black/40 text-black transition-all" title="Toggle Sound">
+          <i data-lucide="volume-x" id="audio-icon" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="relative z-10">
+
+    <!-- ================= HERO SECTION (PINNED 3D DECK SCROLL TRIGGER) ================= -->
+    <section id="hero" class="relative min-h-screen flex flex-col justify-between items-center px-6 pt-24 pb-12 overflow-hidden">
+      
+      <!-- Top Grid Crosshairs -->
+      <div class="w-full max-w-6xl flex justify-between relative text-gray-400 font-mono text-xs select-none">
+        <span>+</span>
+        <span>+</span>
+        <span>+</span>
+      </div>
+
+      <!-- HERO CENTER: Kinetic Title + Red Stripe -->
+      <div class="relative z-10 text-center my-auto">
+        
+        <!-- Red Vertical Stripe Behind Text -->
+        <div class="red-stripe" id="hero-red-stripe"></div>
+
+        <!-- Stacked Outlined & Solid Kinetic Title -->
+        <div class="portfolio-title-container select-none">
+          
+          <!-- Solid Front Text -->
+          <h1 class="font-title text-5xl sm:text-7xl md:text-8xl portfolio-title-solid" id="title-solid">
+            ARJUN BALAJI S
+          </h1>
+
+          <!-- Outlined Offset Layer -->
+          <h1 class="font-title text-5xl sm:text-7xl md:text-8xl portfolio-title-outline" id="title-outline">
+            ARJUN BALAJI S
+          </h1>
+
+        </div>
+
+        <!-- Designer Metadata Line -->
+        <div class="max-w-4xl mx-auto flex items-center justify-between mt-12 pt-4 border-t border-black/10 text-xs font-mono-tech uppercase font-bold tracking-widest text-[#111215]" id="hero-metadata">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#ea3829]"></span>
+            <span>CIT COIMBATORE</span>
+          </div>
+          <span>M.SC. SOFTWARE SYSTEMS • FULL-STACK ENGINEER</span>
+        </div>
+
+      </div>
+
+      <!-- HERO BOTTOM: 3D Fan Deck Carousel -->
+      <div id="portfolio-deck" class="w-full max-w-5xl mx-auto relative mt-4 pb-12 flex justify-center items-center card-deck-container">
+        
+        <!-- 3D Fan Deck Stack -->
+        <div class="relative w-full h-[380px] sm:h-[420px] flex justify-center items-center">
+          
+          <!-- Card 1: Far Left (AETHER Digital Museum) -->
+          <div class="fan-card absolute w-48 sm:w-56 h-64 sm:h-80 rounded-2xl bg-[#f4f4f2] border border-black/10 p-4 flex flex-col justify-between text-[#111215] z-10" id="card-1">
+            <div class="w-full h-36 bg-[#18191c] rounded-xl overflow-hidden p-3 flex flex-col justify-between text-white relative">
+              <span class="text-[9px] font-mono text-gray-400">PROJECT 01</span>
+              <div class="w-full h-12 bg-gradient-to-t from-[#ea3829] to-cyan-400 rounded-md opacity-80 animate-pulse"></div>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider block text-gray-500 mb-1">INTERACTIVE 3D WEB</span>
+              <h3 class="font-bold text-base leading-tight">AETHER — DIGITAL MUSEUM</h3>
+            </div>
+            <div class="flex justify-between items-center text-[9px] font-mono text-gray-400 pt-2 border-t border-black/10">
+              <span>HTML5 / JS / CSS3</span>
+              <span>2026</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Left (DROP Storage Marketplace) -->
+          <div class="fan-card absolute w-48 sm:w-56 h-64 sm:h-80 rounded-2xl bg-[#0d0e11] border border-white/10 p-4 flex flex-col justify-between text-white z-20 shadow-2xl" id="card-2">
+            <div class="w-full h-40 bg-[#050608] rounded-xl overflow-hidden flex items-center justify-center relative">
+              <div class="w-24 h-24 rounded-full bg-purple-500/20 border-2 border-purple-400 flex items-center justify-center animate-pulse">
+                <i data-lucide="server" class="w-8 h-8 text-purple-400"></i>
+              </div>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider block text-purple-400 mb-1">ANGULAR P2P APP</span>
+              <h3 class="font-bold text-base text-white leading-tight">DROP — STORAGE MARKET</h3>
+            </div>
+            <div class="flex justify-between items-center text-[9px] font-mono text-gray-400 pt-2 border-t border-black/10">
+              <span>ANGULAR SIGNALS</span>
+              <span>TYPESCRIPT</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Center Featured Card (Solid Red with Arjun's Logo) -->
+          <div class="fan-card absolute w-52 sm:w-60 h-72 sm:h-88 rounded-2xl bg-[#ea3829] text-white p-6 flex flex-col justify-between items-center shadow-2xl z-30" id="card-3">
+            <div class="flex justify-between w-full text-[10px] font-mono tracking-widest">
+              <span>SOFTWARE</span>
+              <span>2026</span>
+            </div>
+            
+            <!-- Emblem Logo -->
+            <div class="w-24 h-24 rounded-full bg-black flex items-center justify-center my-auto p-4 shadow-xl text-center">
+              <span class="font-title font-black text-2xl text-[#ea3829]">AB</span>
+            </div>
+
+            <div class="text-center">
+              <h3 class="font-title font-extrabold text-xl tracking-wider text-black">ARJUN BALAJI S</h3>
+              <span class="text-[9px] font-mono uppercase tracking-widest text-black/80">FULL-STACK ENGINEER</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Right (SKILLPROOF Platform) -->
+          <div class="fan-card absolute w-48 sm:w-56 h-64 sm:h-80 rounded-2xl bg-[#e8e9eb] border border-black/10 p-4 flex flex-col justify-between text-[#111215] z-20" id="card-4">
+            <div class="w-full h-40 bg-[#16171a] rounded-xl overflow-hidden relative p-4 flex flex-col justify-end">
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+              <div class="relative z-10">
+                <span class="text-[10px] font-mono text-gray-300 block">REACT & NODE.JS</span>
+                <span class="text-xs font-bold text-white">SKILLPROOF DASHBOARD</span>
+              </div>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider block text-gray-500 mb-1">FULL-STACK PLATFORM</span>
+              <h3 class="font-bold text-base leading-tight">SKILLPROOF</h3>
+            </div>
+            <div class="flex justify-between items-center text-[9px] font-mono text-gray-400 pt-2 border-t border-black/10">
+              <span>POSTGRESQL / JWT</span>
+              <span>REST API</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Far Right (SIH Hackathons & NCC) -->
+          <div class="fan-card absolute w-48 sm:w-56 h-64 sm:h-80 rounded-2xl bg-[#ffffff] border border-black/10 p-4 flex flex-col justify-between text-[#111215] z-10" id="card-5">
+            <div class="w-full h-36 bg-[#f0f1f3] rounded-xl overflow-hidden p-3 flex flex-col justify-between relative border border-black/5">
+              <span class="text-[9px] font-mono text-gray-400">SIH 2025/2026</span>
+              <div class="w-full h-16 bg-[#121316] rounded-lg flex items-center justify-center text-white text-xs font-mono font-bold">
+                EDUTUNTER FINALIST
+              </div>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider block text-gray-500 mb-1">ACHIEVEMENTS</span>
+              <h3 class="font-bold text-base leading-tight">NCC & HACKATHONS</h3>
+            </div>
+            <div class="flex justify-between items-center text-[9px] font-mono text-gray-400 pt-2 border-t border-black/10">
+              <span>LANCE CORPORAL</span>
+              <span>RANK 2ND</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Rotating Dial Disc with ME marker at bottom -->
+        <div class="dial-disc flex items-start justify-center pt-3">
+          <div class="flex flex-col items-center text-xs font-mono font-bold text-black cursor-pointer group">
+            <i data-lucide="chevron-up" class="w-4 h-4 text-[#ea3829] group-hover:-translate-y-1 transition-transform"></i>
+            <span>ME</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= SECTION 2: TECHNICAL SKILLS MATRIX ================= -->
+    <section id="skills-awards" class="relative py-24 px-6 bg-[#e4e5e7] text-[#111215] border-t border-black/10">
+      <div class="max-w-4xl mx-auto">
+        
+        <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#ea3829] block mb-2 text-center">TECHNICAL PROFICIENCY</span>
+        <h2 class="font-title text-3xl sm:text-5xl uppercase mb-12 text-center">SKILLS & TECHNOLOGIES</h2>
+
+        <div class="space-y-8 bg-white p-8 sm:p-10 rounded-3xl border border-black/10 shadow-lg">
+          <!-- Skill 1 -->
+          <div>
+            <div class="flex justify-between text-xs sm:text-sm font-mono font-bold uppercase mb-2">
+              <span>Web Development (React, Angular, Node.js, Express, HTML5, CSS3, Bootstrap)</span>
+              <span class="text-[#ea3829]">95%</span>
+            </div>
+            <div class="w-full h-3 bg-black/10 rounded-full overflow-hidden p-0.5">
+              <div class="h-full bg-[#ea3829] rounded-full w-[95%] transition-all duration-1000"></div>
+            </div>
+          </div>
+
+          <!-- Skill 2 -->
+          <div>
+            <div class="flex justify-between text-xs sm:text-sm font-mono font-bold uppercase mb-2">
+              <span>Programming Languages (Python, Java, C, C++, JavaScript, TypeScript)</span>
+              <span class="text-[#ea3829]">92%</span>
+            </div>
+            <div class="w-full h-3 bg-black/10 rounded-full overflow-hidden p-0.5">
+              <div class="h-full bg-[#111215] rounded-full w-[92%] transition-all duration-1000"></div>
+            </div>
+          </div>
+
+          <!-- Skill 3 -->
+          <div>
+            <div class="flex justify-between text-xs sm:text-sm font-mono font-bold uppercase mb-2">
+              <span>Database Development (PostgreSQL, MySQL, JWT, REST APIs)</span>
+              <span class="text-[#ea3829]">90%</span>
+            </div>
+            <div class="w-full h-3 bg-black/10 rounded-full overflow-hidden p-0.5">
+              <div class="h-full bg-[#ea3829] rounded-full w-[90%] transition-all duration-1000"></div>
+            </div>
+          </div>
+
+          <!-- Skill 4 -->
+          <div>
+            <div class="flex justify-between text-xs sm:text-sm font-mono font-bold uppercase mb-2">
+              <span>Tools & Version Control (Git, GitHub, Angular Signals, CAPTCHA)</span>
+              <span class="text-[#ea3829]">94%</span>
+            </div>
+            <div class="w-full h-3 bg-black/10 rounded-full overflow-hidden p-0.5">
+              <div class="h-full bg-[#111215] rounded-full w-[94%] transition-all duration-1000"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 3A: SOFTWARE PROJECTS COLUMN ================= -->
+    <section id="projects-section" class="relative py-28 px-6 bg-[#111215] text-white">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-white/10 pb-6">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#ea3829] block mb-2">01 • FEATURED SOFTWARE PROJECTS</span>
+            <h2 class="font-title text-4xl sm:text-5xl text-white uppercase">SOFTWARE PROJECTS</h2>
+          </div>
+          <p class="text-gray-400 text-sm max-w-md mt-4 md:mt-0">
+            Interactive digital museum, peer-to-peer storage marketplace, and full-stack skill verification platform.
+          </p>
+        </div>
+
+        <!-- Projects Grid (3 Columns) -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Populated via PROJECTS_DATA -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 3B: HACKATHONS & COMPETITIONS COLUMN ================= -->
+    <section id="hackathons-section" class="relative py-24 px-6 bg-[#0c0d10] text-white border-t border-white/10">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-white/10 pb-6">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#ea3829] block mb-2">02 • COMPETITIONS & INNOVATION</span>
+            <h2 class="font-title text-4xl sm:text-5xl text-white uppercase">HACKATHONS & CONTESTS</h2>
+          </div>
+          <p class="text-gray-400 text-sm max-w-md mt-4 md:mt-0">
+            National problem solving challenges, finalist status, and technical innovation rounds.
+          </p>
+        </div>
+
+        <!-- Hackathons Grid (3 Columns) -->
+        <div id="hackathons-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Populated via HACKATHONS_DATA -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 3C: ACHIEVEMENTS & HONORS COLUMN ================= -->
+    <section id="achievements-section" class="relative py-24 px-6 bg-[#111215] text-white border-t border-white/10">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-white/10 pb-6">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-[0.2em] text-[#ea3829] block mb-2">03 • LEADERSHIP & SPORTS</span>
+            <h2 class="font-title text-4xl sm:text-5xl text-white uppercase">ACHIEVEMENTS & HONORS</h2>
+          </div>
+          <p class="text-gray-400 text-sm max-w-md mt-4 md:mt-0">
+            NCC A-Certificate Lance Corporal rank, district ball badminton runner-up, and cricket honors.
+          </p>
+        </div>
+
+        <!-- Achievements Grid (3 Columns) -->
+        <div id="achievements-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Populated via ACHIEVEMENTS_DATA -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 4: CONTACT ================= -->
+    <section id="contact" class="relative py-32 px-6 bg-[#e4e5e7] text-[#111215]">
+      <div class="max-w-3xl mx-auto text-center" id="contact-card-container">
+        
+        <div class="w-16 h-16 mx-auto rounded-full bg-[#ea3829] text-white flex items-center justify-center mb-8 shadow-xl">
+          <i data-lucide="send" class="w-7 h-7"></i>
+        </div>
+
+        <h2 class="font-title text-4xl sm:text-6xl uppercase mb-4">GET IN TOUCH</h2>
+        <p class="text-gray-600 text-sm sm:text-base mb-8 max-w-xl mx-auto">
+          Seeking an entry-level Software Engineer or Full-Stack Developer opportunity.
+        </p>
+
+        <!-- Direct Contact Details -->
+        <div class="flex flex-wrap justify-center items-center gap-6 mb-8 text-xs font-mono font-bold uppercase">
+          <a href="mailto:sbalajiarjun@gmail.com" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-black/10 hover:border-[#ea3829] transition-colors">
+            <i data-lucide="mail" class="w-4 h-4 text-[#ea3829]"></i>
+            <span>sbalajiarjun@gmail.com</span>
+          </a>
+          <a href="tel:+919789645766" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-black/10 hover:border-[#ea3829] transition-colors">
+            <i data-lucide="phone" class="w-4 h-4 text-[#ea3829]"></i>
+            <span>+91 9789645766</span>
+          </a>
+          <a href="https://github.com/Arjunbalaji123" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-black/10 hover:border-[#ea3829] transition-colors">
+            <i data-lucide="github" class="w-4 h-4 text-[#ea3829]"></i>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/arjun-balaji-s-288b9331b/" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-black/10 hover:border-[#ea3829] transition-colors">
+            <i data-lucide="linkedin" class="w-4 h-4 text-[#ea3829]"></i>
+            <span>LinkedIn</span>
+          </a>
+        </div>
+
+        <form class="space-y-4 max-w-md mx-auto text-left" onsubmit="event.preventDefault(); alert('Message dispatched! Arjun Balaji will reply to your email shortly.');">
+          <input type="text" placeholder="Your Name" required class="w-full px-5 py-3.5 rounded-xl bg-white border border-black/10 text-black placeholder-gray-400 focus:outline-none focus:border-[#ea3829] text-sm">
+          <input type="email" placeholder="Your Email Address" required class="w-full px-5 py-3.5 rounded-xl bg-white border border-black/10 text-black placeholder-gray-400 focus:outline-none focus:border-[#ea3829] text-sm">
+          <textarea placeholder="Message for Arjun..." rows="4" required class="w-full px-5 py-3.5 rounded-xl bg-white border border-black/10 text-black placeholder-gray-400 focus:outline-none focus:border-[#ea3829] text-sm resize-none"></textarea>
+          <button type="submit" class="w-full py-4 rounded-xl bg-[#ea3829] text-white font-mono uppercase font-bold text-sm tracking-wider hover:bg-black transition-colors shadow-lg">
+            SEND INQUIRY
+          </button>
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-black/10 py-8 px-6 bg-[#e4e5e7] text-xs font-mono text-gray-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      <span>© 2026 ARJUN BALAJI S • FULL-STACK DEVELOPER</span>
+      <div class="flex gap-6 uppercase font-bold text-black">
+        <a href="https://www.linkedin.com/in/arjun-balaji-s-288b9331b/" target="_blank" class="hover:text-[#ea3829]">LinkedIn</a>
+        <a href="https://github.com/Arjunbalaji123" target="_blank" class="hover:text-[#ea3829]">GitHub</a>
+        <a href="mailto:sbalajiarjun@gmail.com" class="hover:text-[#ea3829]">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Dialog -->
+  <div id="modal-container" class="fixed inset-0 z-[999] bg-black/80 backdrop-blur-md flex items-center justify-center p-6 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-2xl rounded-2xl bg-[#111215] border border-white/10 p-8 text-white shadow-2xl" id="modal-card">
+      <button id="modal-close" class="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/audio-synth.js"></script>
+  <script src="js/gallery-data.js"></script>
+  <script src="js/three-scene.js"></script>
+  <script src="js/scroll-engine.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
